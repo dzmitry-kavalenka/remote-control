@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "target": "es5",
+    "allowJs": true,
+    "moduleResolution": "node",
+  },
+  "exclude": ["./src/http_server", "node_modules"]
+}
