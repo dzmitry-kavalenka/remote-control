@@ -1,15 +1,13 @@
-import { mouse } from '@nut-tree/nut-js';
+import { down, left, mouse, right, up } from '@nut-tree/nut-js';
 import { WebSocket } from 'ws';
 
 import { BETWEEN_UNDERSCORE_AND_SPACE_RX, AFTER_SPACE_RX } from '../utils';
 
-import * as mouseHandlers from './handlers';
-
 const mouseCommands = {
-  up: mouseHandlers.mouseUp,
-  down: mouseHandlers.mouseDown,
-  left: mouseHandlers.mouseLeft,
-  right: mouseHandlers.mouseRight,
+  up: up,
+  down: down,
+  left: left,
+  right: right,
 };
 
 export const useMouse = async (action: string, ws: WebSocket) => {
@@ -25,10 +23,7 @@ export const useMouse = async (action: string, ws: WebSocket) => {
     if (AFTER_SPACE_RX.test(action)) {
       const offset = action.match(AFTER_SPACE_RX)[1];
 
-      await mouseCommands[command as keyof typeof mouseCommands](
-        Number(offset),
-        currentPosition,
-      );
+      mouse.move(mouseCommands[command as keyof typeof mouseCommands](Number(offset)));
 
       ws.send(`mouse_${command}\t${offset}`);
     }
