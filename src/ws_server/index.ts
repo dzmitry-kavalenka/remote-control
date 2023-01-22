@@ -1,9 +1,9 @@
 import { WebSocketServer } from 'ws';
 import * as dotenv from 'dotenv';
 
-import { useMouse } from './mouse';
-
 import { BEFORE_UNDERSCORE_RX } from './utils';
+import { useMouse } from './mouse';
+import { draw } from './drawing';
 
 dotenv.config();
 
@@ -23,6 +23,10 @@ wss.on('connection', (ws) => {
 
       if (command === 'mouse') {
         await useMouse(stringData, ws);
+      }
+
+      if (command === 'draw') {
+        await draw(stringData, ws);
       }
     }
   });
