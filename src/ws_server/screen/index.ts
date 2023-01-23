@@ -5,18 +5,17 @@ import Jimp from 'jimp';
 export const printScreen = async (ws: WebSocket) => {
   const { x, y } = await mouse.getPosition();
 
-  const screenshot = await screen.grabRegion(new Region(x, y, 100, 100));
-  console.log(screenshot.data);
+  const { data, width, height } = await screen.grabRegion(
+    new Region(x - 100, y - 100, 200, 200),
+  );
 
-  const jimp = new Jimp(screenshot.data, (err: any) => {
+  const jimp = new Jimp({ data, width, height }, (err: any) => {
     if (err) {
       console.error(err);
     }
   });
 
-  const base64 = await jimp.getBase64Async('image/png');
+  const base64 = await jimp.getBase64Async(Jimp.MIME_PNG);
 
-  console.log({ base64 });
-
-  ws.send(`prnt_scrn ${base64}`);
+  ws.send(`prnt_scrn ${base64.replace('data:image/png;base64,', '')}`);
 };
