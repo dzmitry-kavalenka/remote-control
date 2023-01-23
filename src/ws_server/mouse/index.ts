@@ -30,6 +30,6 @@ export const useMouse = async (action: string, ws: WebSocket) => {
   }
 
   if (command === 'position') {
-    ws.send(`mouse_position\t${currentPosition.x},${currentPosition.y}`);
+    ws.send(`mouse_position ${currentPosition.x},${currentPosition.y}`);
   }
 };
