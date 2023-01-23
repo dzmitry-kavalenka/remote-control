@@ -9,7 +9,7 @@ export const printScreen = async (ws: WebSocket) => {
     new Region(x - 100, y - 100, 200, 200),
   );
 
-  const jimp = new Jimp({ data, width, height }, (err: any) => {
+  const jimp = new Jimp({ data, width, height }, (err: Error | null) => {
     if (err) {
       console.error(err);
     }
