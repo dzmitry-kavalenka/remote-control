@@ -1,6 +1,8 @@
 import { WebSocketServer } from 'ws';
 import * as dotenv from 'dotenv';
 
+import { httpServer } from '../http_server';
+
 import { BEFORE_UNDERSCORE_RX } from './utils';
 import { useMouse } from './mouse';
 import { draw } from './drawing';
@@ -10,7 +12,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
-const wss = new WebSocketServer({ port: Number(PORT) });
+export const wss = new WebSocketServer({ port: Number(PORT) });
 
 wss.on('connection', (ws) => {
   ws.on('message', async (data) => {
@@ -35,4 +37,13 @@ wss.on('connection', (ws) => {
       }
     }
   });
+});
+
+process.on('SIGINT', () => {
+  wss.close();
+  httpServer.close();
+
+  console.log('bye bye');
+
+  process.exit();
 });
