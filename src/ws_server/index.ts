@@ -15,6 +15,8 @@ const PORT = process.env.PORT || 8080;
 export const wss = new WebSocketServer({ port: Number(PORT) });
 
 wss.on('connection', (ws) => {
+  console.log(`Websocket server running on ws://localhost:${PORT}`);
+
   ws.on('message', async (data) => {
     if (data) {
       const stringData = data.toString();
@@ -39,11 +41,13 @@ wss.on('connection', (ws) => {
   });
 });
 
+wss.on('close', () => {
+  process.exit();
+});
+
 process.on('SIGINT', () => {
   wss.close();
   httpServer.close();
-
-  console.log('bye bye');
 
   process.exit();
 });
