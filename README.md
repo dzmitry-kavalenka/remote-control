@@ -9,9 +9,15 @@
 ## Usage
 **Development**
 
-`npm run start:dev`
+**Start Front Server**
 
-* App served @ `http://localhost:8181` with nodemon
+`npm run front:dev`
+
+App served @ `http://localhost:8181` with nodemon
+
+**Start websocket Server**
+
+`npm run server:dev` with nodemon
 
 **Production**
 
